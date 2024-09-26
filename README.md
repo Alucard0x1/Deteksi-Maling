@@ -36,12 +36,12 @@ Live version of the tool can be found [here](https://deteksi-maling2.vercel.app/
 
 1. **Clone the repository**:
     ```bash
-    git clone https://github.com/yourusername/deteksi-maling-neptu-jawa.git
+    git clone https://github.com/Alucard0x1/Deteksi-Maling.git
     ```
 
 2. **Navigate to the project folder**:
     ```bash
-    cd deteksi-maling-neptu-jawa
+    cd Deteksi-Maling
     ```
 
 3. **Install Vercel (optional, if deploying via Vercel CLI)**:
