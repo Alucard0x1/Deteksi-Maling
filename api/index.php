@@ -1,6 +1,9 @@
 <?php
 // api/index.php
 
+// Start session if using session-based results (optional)
+// session_start();
+
 // Serve the HTML form
 header('Content-Type: text/html; charset=UTF-8');
 ?>
@@ -18,7 +21,7 @@ header('Content-Type: text/html; charset=UTF-8');
 <body>
     <div class="container">
         <h1>Deteksi Maling Berdasarkan Primbon Jawa</h1>
-        <form action="/process" method="POST">
+        <form action="/process.php" method="POST">
             <div class="form-group">
                 <label for="tanggal_lahir">Tanggal Lahir Korban:</label>
                 <input type="date" id="tanggal_lahir" name="tanggal_lahir" required>
@@ -33,12 +36,29 @@ header('Content-Type: text/html; charset=UTF-8');
         </form>
 
         <?php
+        // Display error message if available
+        if (isset($_GET['error'])) {
+            $error = htmlspecialchars($_GET['error']);
+            echo '<div class="alert error">' . $error . '</div>';
+        }
+
         // Display the result if available
         if (isset($_GET['hasil'])) {
             $hasil = htmlspecialchars($_GET['hasil']);
             $hasil = nl2br($hasil);
             echo '<div class="result">' . $hasil . '</div>';
         }
+
+        // Option 2: If using session-based results
+        /*
+        if (isset($_SESSION['hasil'])) {
+            $hasil = htmlspecialchars($_SESSION['hasil']);
+            $hasil = nl2br($hasil);
+            echo '<div class="result">' . $hasil . '</div>';
+            // Unset the session variable to prevent repeated display
+            unset($_SESSION['hasil']);
+        }
+        */
         ?>
     </div>
 </body>
