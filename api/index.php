@@ -20,7 +20,7 @@ header('Content-Type: text/html; charset=UTF-8');
 </head>
 <body>
     <div class="container">
-        <h1>Deteksi Maling Berdasarkan Primbon Jawa</h1>
+        <h1>Deteksi Maling Berdasarkan Neptu Jawa</h1>
         <form action="/process" method="POST">
             <div class="form-group">
                 <label for="tanggal_lahir">Tanggal Lahir Korban:</label>
