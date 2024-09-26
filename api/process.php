@@ -1,5 +1,5 @@
 <?php
-// process.php
+// api/process.php
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve and sanitize input
@@ -96,15 +96,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     redirectWithResult($result);
 } else {
     // If accessed directly, redirect to index.php
-    header('Location: index.php');
+    header('Location: /');
     exit();
 }
 
 function redirectWithResult($hasil) {
     // Encode the result to pass it via URL
     $encoded_hasil = urlencode($hasil);
-    header("Location: index.php?hasil=$encoded_hasil");
+    header("Location: /?hasil=$encoded_hasil");
     exit();
 }
 ?>
-
