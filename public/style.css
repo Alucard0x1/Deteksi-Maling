@@ -140,14 +140,16 @@ button:hover {
     }
 }
 
-/* Loading Spinner Styles */
+
 .loading {
     text-align: center;
     margin-top: 1rem;
     font-weight: bold;
     color: #007BFF;
+    animation: spin 1s linear infinite;
 }
 
-.hidden {
-    display: none;
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
