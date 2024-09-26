@@ -1,4 +1,9 @@
-<!-- index.php -->
+<?php
+// api/index.php
+
+// Serve the HTML form
+header('Content-Type: text/html; charset=UTF-8');
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -8,12 +13,12 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <!-- CSS Styles -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/public/style.css">
 </head>
 <body>
     <div class="container">
         <h1>Deteksi Maling Berdasarkan Primbon Jawa</h1>
-        <form action="process.php" method="POST">
+        <form action="/process" method="POST">
             <label for="tanggal_lahir">Tanggal Lahir Korban:</label>
             <input type="date" id="tanggal_lahir" name="tanggal_lahir" required>
 
@@ -26,10 +31,11 @@
         <?php
         // Display the result if available
         if (isset($_GET['hasil'])) {
-            echo '<div id="hasil">' . nl2br(htmlspecialchars($_GET['hasil'])) . '</div>';
+            $hasil = htmlspecialchars($_GET['hasil']);
+            $hasil = nl2br($hasil);
+            echo '<div id="hasil">' . $hasil . '</div>';
         }
         ?>
     </div>
 </body>
 </html>
-
