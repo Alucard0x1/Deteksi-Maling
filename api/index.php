@@ -14,7 +14,7 @@ header('Content-Type: text/html; charset=UTF-8');
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUa6mOZ8+lnJdph6Alciq5DJpLEa+8rQwbFTG3ykPyBD4e5dqLx2qqC4e7g2" crossorigin="anonymous">
-    <!-- Custom CSS (optional) -->
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="/style.css">
 </head>
 <body class="bg-light">
@@ -47,7 +47,14 @@ header('Content-Type: text/html; charset=UTF-8');
                         if (isset($_GET['hasil'])) {
                             $hasil = htmlspecialchars($_GET['hasil']);
                             $hasil = nl2br($hasil);
-                            echo '<div class="alert alert-success mt-4" role="alert">' . $hasil . '</div>';
+                            echo '
+                            <div class="alert alert-success mt-4 d-flex align-items-center" role="alert">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="bi flex-shrink-0 me-2" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.97 11.03a.75.75 0 0 0 1.07 0l3-3a.75.75 0 0 0-1.06-1.06L7.5 9.44 5.53 7.47a.75.75 0 0 0-1.06 1.06l2.5 2.5z"/>
+                                </svg>
+                                <div>' . $hasil . '</div>
+                            </div>
+                            ';
                         }
                         ?>
                     </div>
