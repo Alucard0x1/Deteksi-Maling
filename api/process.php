@@ -8,8 +8,8 @@ error_reporting(E_ALL);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve and sanitize input
-    $tanggal_lahir = $_POST['tanggal_lahir'] ?? '';
-    $tanggal_kehilangan = $_POST['tanggal_kehilangan'] ?? '';
+    $tanggal_lahir = isset($_POST['tanggal_lahir']) ? trim($_POST['tanggal_lahir']) : '';
+    $tanggal_kehilangan = isset($_POST['tanggal_kehilangan']) ? trim($_POST['tanggal_kehilangan']) : '';
 
     if (empty($tanggal_lahir) || empty($tanggal_kehilangan)) {
         $hasil = "Mohon isi kedua tanggal terlebih dahulu.";
@@ -65,6 +65,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             "Wage" => 4
         ];
 
+        // Check if day and pasaran exist to prevent undefined index errors
+        if (!isset($hariValues[$day]) || !isset($pasaranValues[$pasaran])) {
+            return 0; // Default or handle as needed
+        }
+
         return $hariValues[$day] + $pasaranValues[$pasaran];
     }
 
@@ -97,18 +102,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               "Total Neptu: $totalNeptu\n" .
               "Hasil: $hasil";
 
-    // Redirect back to index.php with the result
+    // Redirect back to root URL with the result
     redirectWithResult($result);
 } else {
-    // If accessed directly, redirect to index.php
-    header('Location: index.php');
+    // If accessed directly, redirect to root URL
+    header('Location: /');
     exit();
 }
 
 function redirectWithResult($hasil) {
     // Encode the result to pass it via URL
     $encoded_hasil = urlencode($hasil);
-    // Correct redirection path
+    // Corrected redirect path to root
     header("Location: /?hasil=$encoded_hasil");
     exit();
 }
