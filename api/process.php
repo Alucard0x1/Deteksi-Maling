@@ -1,6 +1,11 @@
 <?php
 // process.php
 
+// Enable error reporting for debugging (REMOVE in production)
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve and sanitize input
     $tanggal_lahir = $_POST['tanggal_lahir'] ?? '';
@@ -103,7 +108,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 function redirectWithResult($hasil) {
     // Encode the result to pass it via URL
     $encoded_hasil = urlencode($hasil);
-    header("Location: index.php?hasil=$encoded_hasil");
+    // Correct redirection path
+    header("Location: /?hasil=$encoded_hasil");
     exit();
 }
 ?>
