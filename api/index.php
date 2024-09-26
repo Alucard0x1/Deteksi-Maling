@@ -1,7 +1,7 @@
 <?php
 // api/index.php
 
-// Start session if using session-based results (optional)
+// Start session if using sessions (optional)
 // session_start();
 
 // Serve the HTML form
@@ -21,45 +21,63 @@ header('Content-Type: text/html; charset=UTF-8');
 <body>
     <div class="container">
         <h1>Deteksi Maling Berdasarkan Primbon Jawa</h1>
-        <form action="/process.php" method="POST">
+        <form action="/process" method="POST">
             <div class="form-group">
                 <label for="tanggal_lahir">Tanggal Lahir Korban:</label>
-                <input type="date" id="tanggal_lahir" name="tanggal_lahir" required>
+                <input type="date" id="tanggal_lahir" name="tanggal_lahir" required aria-describedby="tanggalLahirHelp" 
+                       oninvalid="this.setCustomValidity('Silakan pilih tanggal lahir korban')" 
+                       oninput="this.setCustomValidity('')">
+                <div id="tanggalLahirHelp" class="form-text">Pilih tanggal lahir korban.</div>
             </div>
 
             <div class="form-group">
                 <label for="tanggal_kehilangan">Tanggal Kehilangan:</label>
-                <input type="date" id="tanggal_kehilangan" name="tanggal_kehilangan" required>
+                <input type="date" id="tanggal_kehilangan" name="tanggal_kehilangan" required aria-describedby="tanggalKehilanganHelp" 
+                       oninvalid="this.setCustomValidity('Silakan pilih tanggal kehilangan')" 
+                       oninput="this.setCustomValidity('')">
+                <div id="tanggalKehilanganHelp" class="form-text">Pilih tanggal kehilangan.</div>
             </div>
 
             <button type="submit">Hitung Pelaku</button>
+
+            <!-- Loading Spinner -->
+            <div id="loading" class="loading hidden">Loading...</div>
         </form>
 
         <?php
-        // Display error message if available
+        // Display error message if available via query parameter
         if (isset($_GET['error'])) {
             $error = htmlspecialchars($_GET['error']);
             echo '<div class="alert error">' . $error . '</div>';
         }
 
-        // Display the result if available
+        // Display the result if available via query parameter
         if (isset($_GET['hasil'])) {
             $hasil = htmlspecialchars($_GET['hasil']);
             $hasil = nl2br($hasil);
             echo '<div class="result">' . $hasil . '</div>';
         }
 
-        // Option 2: If using session-based results
+        // Option 2: If using session-based results (uncomment if using sessions)
         /*
         if (isset($_SESSION['hasil'])) {
             $hasil = htmlspecialchars($_SESSION['hasil']);
             $hasil = nl2br($hasil);
             echo '<div class="result">' . $hasil . '</div>';
-            // Unset the session variable to prevent repeated display
-            unset($_SESSION['hasil']);
+            unset($_SESSION['hasil']); // Clear the session variable
         }
         */
         ?>
     </div>
+
+    <!-- Custom JavaScript for loading spinner -->
+    <script>
+        const form = document.querySelector('form');
+        const loading = document.getElementById('loading');
+
+        form.addEventListener('submit', () => {
+            loading.classList.remove('hidden');
+        });
+    </script>
 </body>
 </html>
