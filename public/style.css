@@ -22,10 +22,13 @@ body {
 }
 
 h1 {
-    text-align: center;
-    color: #333333;
-    margin-bottom: 1.5rem;
+    font-size: 1.5rem; /* Adjust font size to fit within the form */
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflow if the text exceeds the container width */
+    text-overflow: ellipsis; /* Show ellipsis if text overflows */
+    text-align: center; /* Center-align the text */
 }
+
 
 form {
     display: flex;
