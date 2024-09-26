@@ -1,7 +1,5 @@
 <?php
-// api/index.php
 
-// Serve the HTML form
 header('Content-Type: text/html; charset=UTF-8');
 ?>
 <!DOCTYPE html>
@@ -10,9 +8,7 @@ header('Content-Type: text/html; charset=UTF-8');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deteksi Maling Berdasarkan Primbon Jawa</title>
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS via CDN -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
@@ -30,8 +26,6 @@ header('Content-Type: text/html; charset=UTF-8');
             </div>
 
             <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors duration-300">Hitung Pelaku</button>
-
-            <!-- Loading Spinner -->
             <div id="spinner" class="hidden flex justify-center mt-4">
                 <svg class="animate-spin h-5 w-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -41,7 +35,7 @@ header('Content-Type: text/html; charset=UTF-8');
         </form>
 
         <?php
-        // Display the result if available
+
         if (isset($_GET['hasil'])) {
             $hasil = htmlspecialchars($_GET['hasil']);
             $hasil = nl2br($hasil);
@@ -50,7 +44,7 @@ header('Content-Type: text/html; charset=UTF-8');
         ?>
     </div>
 
-    <!-- Tailwind JS (Optional for interactive components) -->
+
     <script>
         const form = document.querySelector('form');
         const spinner = document.getElementById('spinner');
