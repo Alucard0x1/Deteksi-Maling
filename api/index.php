@@ -2,7 +2,7 @@
 // api/index.php
 
 // Start session if using sessions (optional)
-// session_start();
+session_start();
 
 // Serve the HTML form
 header('Content-Type: text/html; charset=UTF-8');
@@ -56,18 +56,26 @@ header('Content-Type: text/html; charset=UTF-8');
             $hasil = htmlspecialchars($_GET['hasil']);
             $hasil = nl2br($hasil);
             echo '<div class="result">' . $hasil . '</div>';
+
+            // Option 1: Form with Submit Button for "Hitung Lagi"
+            echo '
+            <form action="/" method="GET" class="hitung-lagi-form">
+                <button type="submit" class="hitung-lagi-button">Hitung Lagi</button>
+            </form>
+            ';
         }
 
-        // Option 2: If using session-based results (uncomment if using sessions)
+        // Option 2: Anchor Tag Styled as Button for "Hitung Lagi"
         /*
-        if (isset($_SESSION['hasil'])) {
-            $hasil = htmlspecialchars($_SESSION['hasil']);
+        if (isset($_GET['hasil'])) {
+            $hasil = htmlspecialchars($_GET['hasil']);
             $hasil = nl2br($hasil);
             echo '<div class="result">' . $hasil . '</div>';
-            unset($_SESSION['hasil']); // Clear the session variable
+            echo '<a href="/" class="hitung-lagi-button">Hitung Lagi</a>';
         }
         */
         ?>
+
     </div>
 
     <!-- Custom JavaScript for loading spinner -->
