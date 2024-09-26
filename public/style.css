@@ -93,6 +93,18 @@ button:hover {
     font-weight: 500;
 }
 
+/* Loading Spinner Styles */
+.loading {
+    text-align: center;
+    margin-top: 1rem;
+    font-weight: bold;
+    color: #007BFF;
+}
+
+.hidden {
+    display: none;
+}
+
 /* Responsive Design */
 @media (max-width: 600px) {
     .container {
