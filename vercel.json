@@ -7,25 +7,20 @@
   },
   "rewrites": [
     {
-      "src": "/",
-      "dest": "/api/index.php"
+      "source": "/",
+      "destination": "/api/index.php"
     },
     {
-      "src": "/process",
-      "dest": "/api/process.php"
-    }
-  ],
-  "routes": [
-    {
-      "handle": "filesystem"
+      "source": "/process",
+      "destination": "/api/process.php"
     },
     {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
     },
     {
-      "src": "/(.*)",
-      "dest": "/public/$1"
+      "source": "/(.*)",
+      "destination": "/public/$1"
     }
   ]
 }
