@@ -1,14 +1,19 @@
 <?php
 // api/process.php
 
-// Start session to store results if needed (optional)
+// Enable error reporting for debugging (REMOVE in production)
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Start session to store results (optional, if using sessions)
 session_start();
 
 // Check if the form was submitted via POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve and sanitize POST data
-    $tanggal_lahir = isset($_POST['tanggal_lahir']) ? $_POST['tanggal_lahir'] : '';
-    $tanggal_kehilangan = isset($_POST['tanggal_kehilangan']) ? $_POST['tanggal_kehilangan'] : '';
+    $tanggal_lahir = isset($_POST['tanggal_lahir']) ? trim($_POST['tanggal_lahir']) : '';
+    $tanggal_kehilangan = isset($_POST['tanggal_kehilangan']) ? trim($_POST['tanggal_kehilangan']) : '';
 
     // Validate the input dates
     if (empty($tanggal_lahir) || empty($tanggal_kehilangan)) {
@@ -29,16 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Perform your calculation or logic here
-    // For demonstration, let's assume a simple total neptu calculation
-    // (Neptu is a Javanese concept; adjust according to your actual logic)
-
-    // Example placeholders for neptu values
+    // Example: Simple total neptu calculation
     $neptu_lahir = 10; // Replace with actual calculation
     $neptu_kehilangan = 10; // Replace with actual calculation
     $total_neptu = $neptu_lahir + $neptu_kehilangan;
 
     // Determine the culprit based on total neptu
-    // Replace with your actual logic
     if ($total_neptu <= 15) {
         $pelaku = 'Pelaku adalah orang dalam rumah sendiri.';
     } else {
@@ -48,12 +49,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Prepare the result
     $hasil = "Hari Lahir: Selasa - Pasaran: Pon\nNeptu Lahir: $neptu_lahir\nHari Kehilangan: Selasa - Pasaran: Pon\nNeptu Kehilangan: $neptu_kehilangan\nTotal Neptu: $total_neptu\nHasil: $pelaku";
 
-    // Option 1: Pass the result via query parameter (simple but limited)
-    // Redirect back with result
+    // Option 1: Pass the result via query parameter
     header('Location: /?hasil=' . urlencode($hasil));
     exit();
 
-    // Option 2: Store the result in session (more secure and flexible)
+    // Option 2: Store the result in session (uncomment if using sessions)
     /*
     $_SESSION['hasil'] = $hasil;
     header('Location: /');
