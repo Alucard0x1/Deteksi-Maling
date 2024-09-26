@@ -119,3 +119,14 @@ button:hover {
         font-size: 0.9rem;
     }
 }
+/* Loading Spinner Styles */
+.loading {
+    text-align: center;
+    margin-top: 1rem;
+    font-weight: bold;
+    color: #007BFF;
+}
+
+.hidden {
+    display: none;
+}
