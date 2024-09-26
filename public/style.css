@@ -5,17 +5,17 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
-/* Optional: Customize card appearance */
+/* Customize card appearance */
 .card {
     border-radius: 15px;
 }
 
-/* Optional: Enhance alert padding */
+/* Enhance alert padding */
 .alert {
     padding: 1rem 1.5rem;
 }
 
-/* Optional: Bold form labels */
+/* Bold form labels */
 .form-label {
     font-weight: 600;
 }
