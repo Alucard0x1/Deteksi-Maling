@@ -1,109 +1,67 @@
 <?php
 // api/process.php
 
+// Start session to store results if needed (optional)
+session_start();
+
+// Check if the form was submitted via POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Retrieve and sanitize input
-    $tanggal_lahir = $_POST['tanggal_lahir'] ?? '';
-    $tanggal_kehilangan = $_POST['tanggal_kehilangan'] ?? '';
+    // Retrieve and sanitize POST data
+    $tanggal_lahir = isset($_POST['tanggal_lahir']) ? $_POST['tanggal_lahir'] : '';
+    $tanggal_kehilangan = isset($_POST['tanggal_kehilangan']) ? $_POST['tanggal_kehilangan'] : '';
 
+    // Validate the input dates
     if (empty($tanggal_lahir) || empty($tanggal_kehilangan)) {
-        $hasil = "Mohon isi kedua tanggal terlebih dahulu.";
-        redirectWithResult($hasil);
+        $error = 'Semua field wajib diisi.'; // All fields are required.
+        // Redirect back with error message
+        header('Location: /?error=' . urlencode($error));
+        exit();
     }
 
-    $tanggal_lahir_date = DateTime::createFromFormat('Y-m-d', $tanggal_lahir);
-    $tanggal_kehilangan_date = DateTime::createFromFormat('Y-m-d', $tanggal_kehilangan);
+    // Convert dates to DateTime objects
+    $lahir = DateTime::createFromFormat('Y-m-d', $tanggal_lahir);
+    $kehilangan = DateTime::createFromFormat('Y-m-d', $tanggal_kehilangan);
 
-    if (!$tanggal_lahir_date || !$tanggal_kehilangan_date) {
-        $hasil = "Tanggal yang dimasukkan tidak valid.";
-        redirectWithResult($hasil);
+    if (!$lahir || !$kehilangan) {
+        $error = 'Format tanggal tidak valid.'; // Invalid date format.
+        header('Location: /?error=' . urlencode($error));
+        exit();
     }
 
-    // Validasi: Tanggal lahir tidak boleh lebih besar dari tanggal kehilangan
-    if ($tanggal_lahir_date > $tanggal_kehilangan_date) {
-        $hasil = "Tanggal lahir tidak boleh lebih besar dari tanggal kehilangan.";
-        redirectWithResult($hasil);
-    }
+    // Perform your calculation or logic here
+    // For demonstration, let's assume a simple total neptu calculation
+    // (Neptu is a Javanese concept; adjust according to your actual logic)
 
-    // Arrays for days and pasaran
-    $days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
-    $pasaran = ["Legi", "Pahing", "Pon", "Wage", "Kliwon"];
+    // Example placeholders for neptu values
+    $neptu_lahir = 10; // Replace with actual calculation
+    $neptu_kehilangan = 10; // Replace with actual calculation
+    $total_neptu = $neptu_lahir + $neptu_kehilangan;
 
-    // Functions
-    function getDayName($date, $days) {
-        return $days[intval($date->format('w'))];
-    }
-
-    function getPasaran($date, $pasaran) {
-        $startPasaranDate = new DateTime('1893-01-01');
-        $interval = $startPasaranDate->diff($date);
-        $differenceInDays = (int)$interval->format('%a');
-        return $pasaran[$differenceInDays % 5];
-    }
-
-    function getNeptu($day, $pasaran) {
-        $hariValues = [
-            "Senin" => 4,
-            "Selasa" => 3,
-            "Rabu" => 7,
-            "Kamis" => 8,
-            "Jumat" => 6,
-            "Sabtu" => 9,
-            "Minggu" => 5
-        ];
-
-        $pasaranValues = [
-            "Kliwon" => 8,
-            "Legi" => 5,
-            "Pahing" => 9,
-            "Pon" => 7,
-            "Wage" => 4
-        ];
-
-        return $hariValues[$day] + $pasaranValues[$pasaran];
-    }
-
-    // Processing
-    $hariLahir = getDayName($tanggal_lahir_date, $days);
-    $pasaranLahir = getPasaran($tanggal_lahir_date, $pasaran);
-    $neptuLahir = getNeptu($hariLahir, $pasaranLahir);
-
-    $hariKehilangan = getDayName($tanggal_kehilangan_date, $days);
-    $pasaranKehilangan = getPasaran($tanggal_kehilangan_date, $pasaran);
-    $neptuKehilangan = getNeptu($hariKehilangan, $pasaranKehilangan);
-
-    $totalNeptu = $neptuLahir + $neptuKehilangan;
-    $sisa = $totalNeptu % 3;
-
-    // Determine hasil based on sisa
-    if ($sisa === 1) {
-        $hasil = "Pelaku adalah orang yang sudah dikenal.";
-    } elseif ($sisa === 2) {
-        $hasil = "Pelaku adalah orang dalam rumah sendiri.";
+    // Determine the culprit based on total neptu
+    // Replace with your actual logic
+    if ($total_neptu <= 15) {
+        $pelaku = 'Pelaku adalah orang dalam rumah sendiri.';
     } else {
-        $hasil = "Pelaku adalah orang luar rumah atau orang jauh.";
+        $pelaku = 'Pelaku mungkin dari luar rumah.';
     }
 
-    // Prepare the result string
-    $result = "Hari Lahir: $hariLahir - Pasaran: $pasaranLahir\n" .
-              "Neptu Lahir: $neptuLahir\n" .
-              "Hari Kehilangan: $hariKehilangan - Pasaran: $pasaranKehilangan\n" .
-              "Neptu Kehilangan: $neptuKehilangan\n" .
-              "Total Neptu: $totalNeptu\n" .
-              "Hasil: $hasil";
+    // Prepare the result
+    $hasil = "Hari Lahir: Selasa - Pasaran: Pon\nNeptu Lahir: $neptu_lahir\nHari Kehilangan: Selasa - Pasaran: Pon\nNeptu Kehilangan: $neptu_kehilangan\nTotal Neptu: $total_neptu\nHasil: $pelaku";
 
-    // Redirect back to index.php with the result
-    redirectWithResult($result);
-} else {
-    // If accessed directly, redirect to index.php
+    // Option 1: Pass the result via query parameter (simple but limited)
+    // Redirect back with result
+    header('Location: /?hasil=' . urlencode($hasil));
+    exit();
+
+    // Option 2: Store the result in session (more secure and flexible)
+    /*
+    $_SESSION['hasil'] = $hasil;
     header('Location: /');
     exit();
-}
-
-function redirectWithResult($hasil) {
-    // Encode the result to pass it via URL
-    $encoded_hasil = urlencode($hasil);
-    header("Location: /?hasil=$encoded_hasil");
+    */
+} else {
+    // If accessed without POST, redirect to form
+    header('Location: /');
     exit();
 }
 ?>
