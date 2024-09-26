@@ -1,5 +1,11 @@
 {
+  "name": "deteksi-maling-primbon-jawa",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "echo 'No build steps required for PHP application.'"
+  },
   "engines": {
     "node": "18.19.18"
-  }
+  },
+  "dependencies": {}
 }
